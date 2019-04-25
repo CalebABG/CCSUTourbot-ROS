@@ -133,8 +133,6 @@ while True:
     try:
         if read_token(ser, contact_synch_reply):
             break
-        else:
-            time.sleep(1)
 
         t2 = millis()
         if elapsed_ms(t2, t1) > resend_synch_request_timeout:
