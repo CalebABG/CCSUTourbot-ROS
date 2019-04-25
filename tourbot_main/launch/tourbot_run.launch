@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!--RPlidar launch -->
+    <!--<include file="$(find tourbot_main)/launch/tourbot_rplidar.launch"/>-->
+
+    <!--Razor 9DOF IMU Pub launch-->
+    <!--<include file="$(find tourbot_main)/launch/tourbot_imu.launch"/>-->
+
+    <!--IMU Madgwick Filter-->
+    <!--<include file="$(find tourbot_main)/launch/tourbot_madgwick_filter.launch"/>-->
+
+    <!--Hector SLAM IMU 2 TF launch-->
+    <!--<include file="$(find tourbot_main)/launch/tourbot_hector_imu2tf.launch"/>-->
+
+    <!--Laser Scan Matcher launch-->
+    <!--<include file="$(find tourbot_main)/launch/lsm.launch"/>-->
+
+    <!--Hector SLAM launch-->
+    <!--<include file="$(find gmapping)/launch/slam_gmapping_pr2.launch"/>-->
+    <!--<include file="$(find tourbot_main)/launch/hector_sim.launch"/>-->
+    <!--<include file="tourbot_hectorsim.launch"/>-->
+
+</launch>

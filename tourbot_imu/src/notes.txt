@@ -1,0 +1,208 @@
+Resources:
+-https://github.com/mitll-ros-pkg/razor_imu_m0_driver/blob/devel/src/factory_firmware_driver.cpp
+-https://raw.githubusercontent.com/kinreehou/razor-9dof-imu-ROS/master/razor_imu_9dof/nodes/imu_node.py
+
+
+### IMU imu_node.py old code ###
+
+def calibrate_linear_accel(ser_dev, n):
+    calibrate_trial = n
+    sum_lax = 0
+    sum_lay = 0
+    sum_laz = 0
+
+    for i in range(calibrate_trial):
+        _line = ser_dev.readline()
+
+        data = get_imu_data(_line)
+
+        sum_lax += -data.ax * accel_factor
+        sum_lay += data.ay * accel_factor
+        sum_laz += data.az * accel_factor
+
+    _accel_offset = [sum_lax / (n * 1.0), sum_lay / (n * 1.0), sum_laz / (n * 1.0)]
+    return _accel_offset
+
+
+def calibrate_angular_velocity(ser_dev, n):
+    calibrate_trial = n
+    sum_avx = 0
+    sum_avy = 0
+    sum_avz = 0
+
+    for i in range(calibrate_trial):
+        _line = ser_dev.readline()
+        data = get_imu_data(_line)
+
+        sum_avx += data.gx
+        sum_avy += -data.gy
+        sum_avz += -data.gz
+
+    _angular_vel_offset = [sum_avx / (n * 1.0), sum_avy / (n * 1.0), sum_avz / (n * 1.0)]
+    return _angular_vel_offset
+
+
+def calibrate_orientation(ser_dev, n):
+    calibrate_trial = n
+    sum_ow = 0
+    sum_ox = 0
+    sum_oy = 0
+    sum_oz = 0
+
+    for i in range(calibrate_trial):
+        _line = ser_dev.readline()
+        data = get_imu_data(_line)
+
+        # in AHRS firmware z axis points down, in ROS z axis points up (see REP 103)
+        _yaw_deg = -data.yaw
+        _yaw_deg = _yaw_deg + imu_yaw_calibration
+
+        if _yaw_deg > 180.0:
+            _yaw_deg = _yaw_deg - 360.0
+
+        if _yaw_deg < -180.0:
+            _yaw_deg = _yaw_deg + 360.0
+
+        _yaw = _yaw_deg * degrees2rad
+
+        # in AHRS firmware y axis points right, in ROS y axis points left (see REP 103)
+        _pitch = -data.pitch * degrees2rad
+        _roll = data.roll * degrees2rad
+
+        _quats = quaternion_from_euler(_roll, _pitch, _yaw)
+
+        sum_ow += _quats[3]
+        sum_ox += _quats[0]
+        sum_oy += _quats[1]
+        sum_oz += _quats[2]
+
+    _orientation_offset = [sum_ow / (n * 1.0), sum_ox / (n * 1.0), sum_oy / (n * 1.0), sum_oz / (n * 1.0)]
+    return _orientation_offset
+
+
+def calibrate_euler(ser_dev, n):
+    calibrate_trial = n
+    sum_angx = 0
+    sum_angy = 0
+    sum_angz = 0
+
+    for i in range(calibrate_trial):
+        _line = ser_dev.readline()
+        data = get_imu_data(_line)
+
+        # in AHRS firmware z axis points down, in ROS z axis points up (see REP 103)
+        _yaw_deg = -data.yaw
+        _yaw_deg = _yaw_deg + imu_yaw_calibration
+
+        if _yaw_deg > 180.0:
+            _yaw_deg = _yaw_deg - 360.0
+
+        if _yaw_deg < -180.0:
+            _yaw_deg = _yaw_deg + 360.0
+
+        _yaw = _yaw_deg * degrees2rad
+
+        # in AHRS firmware y axis points right, in ROS y axis points left (see REP 103)
+        _pitch = -data.pitch * degrees2rad
+        _roll = data.roll * degrees2rad
+
+        sum_angx += roll
+        sum_angy += pitch
+        sum_angz += yaw
+
+    _euler_offset = [sum_angx / (n * 1.0), sum_angy / (n * 1.0), sum_angz / (n * 1.0)]
+    return _euler_offset
+
+
+if calibrate_sensor_offset:
+    rospy.loginfo("Starting IMU Calibration")
+
+    # imu calibration num
+    calib_num = 100
+
+    # calibration
+    accel_offset       = calibrate_linear_accel(ser, calib_num)
+    angular_vel_offset = calibrate_angular_velocity(ser, calib_num)
+    orientation_offset = calibrate_orientation(ser, calib_num)
+    euler_offset       = calibrate_euler(ser, calib_num)
+
+    rospy.loginfo("Calibration is Done!!!\n")
+    rospy.loginfo("Acceleration offset: %s" % accel_offset)
+    rospy.loginfo("Angular velocity offset: %s" % angular_vel_offset)
+    rospy.loginfo("Orientation offset: %s" % orientation_offset)
+    rospy.loginfo("Euler offset: %s" % euler_offset)
+
+
+razorimu = namedtuple('razorimu', 'ax ay az mx my mz gx gy gz')
+
+while not rospy.is_shutdown():
+    # read 36 bytes from IMU because 9 axis binary output sends packets of 9 floats (4 bytes each)
+    # '<' because the IMU sends packets in little-endian format
+    imu_data = razorimu._make(struct.unpack('<9f', ser.read(36)))
+
+    ### IMU Data_Raw Message ###
+    # imu_raw_msg contains the raw inertial measurements
+    imu_raw_msg = Imu()
+    # set header
+    imu_raw_msg.header.stamp = rospy.Time.now()
+    imu_raw_msg.header.frame_id = imu_frame_id
+
+    # acceleration in m / s ^ 2
+    # AHRS firmware accelerations are negated
+    # This means y and z are correct for ROS, but x needs reversing
+    imu_raw_msg.linear_acceleration.x = -imu_data.ax * accel_factor
+    imu_raw_msg.linear_acceleration.y =  imu_data.ay * accel_factor
+    imu_raw_msg.linear_acceleration.z =  imu_data.az * accel_factor
+
+    # accerlation uncertainty
+    imu_raw_msg.linear_acceleration_covariance[0] = linear_acceleration_covariance
+    imu_raw_msg.linear_acceleration_covariance[4] = linear_acceleration_covariance
+    imu_raw_msg.linear_acceleration_covariance[8] = linear_acceleration_covariance
+
+    # gyroscope in rad / sec
+    imu_raw_msg.angular_velocity.x = imu_data.gx
+
+    # in AHRS firmware y axis points right, in ROS y axis points left (see REP 103)
+    imu_raw_msg.angular_velocity.y = -imu_data.gy
+    # in AHRS firmware z axis points down, in ROS z axis points up (see REP 103)
+    imu_raw_msg.angular_velocity.z = -imu_data.gz
+
+    # gyroscope uncertainty
+    imu_raw_msg.angular_velocity_covariance[0] = angular_velocity_covariance
+    imu_raw_msg.angular_velocity_covariance[4] = angular_velocity_covariance
+    imu_raw_msg.angular_velocity_covariance[8] = angular_velocity_covariance
+    imu_raw_msg.orientation_covariance[0] = -1
+    # imu_raw_msg.orientation_covariance[0] = orientation_covariance
+    # imu_raw_msg.orientation_covariance[4] = orientation_covariance
+    # imu_raw_msg.orientation_covariance[8] = orientation_covariance
+
+
+    ### IMU Magnetic Field Message ###
+    # msg_msg contains the magnetic field measurement
+    mag_msg = MagneticField()
+
+    # header is the same as imu_raw_msg
+    mag_msg.header = imu_raw_msg.header
+
+    # convert to Tesla, convert coordinate frame to match IMU
+    mag_msg.magnetic_field.x = 1e-6 * imu_data.mx  # accel / gyro x axis is mag y axis
+    mag_msg.magnetic_field.y = 1e-6 * imu_data.my  # accel / gyro y axis is mag x axis
+    mag_msg.magnetic_field.z = 1e-6 * imu_data.mz * -1  # accel / gyro z axis is negative mag z ax
+
+    # mag_msg.magnetic_field.x = 1e-6 * imu_data.my           # accel / gyro x axis is mag y axis
+    # mag_msg.magnetic_field.y = 1e-6 * imu_data.mx           # accel / gyro y axis is mag x axis
+    # mag_msg.magnetic_field.z = 1e-6 * imu_data.mz * -1      # accel / gyro z axis is negative mag z ax
+    #
+    # magnetic field uncertainty
+    mag_msg.magnetic_field_covariance[0] = magnetic_field_covariance
+    mag_msg.magnetic_field_covariance[4] = magnetic_field_covariance
+    mag_msg.magnetic_field_covariance[8] = magnetic_field_covariance
+
+    # publish messages
+    imu_data_raw_pub.publish(imu_raw_msg)
+    imu_mag_pub.publish(mag_msg)
+
+    # sleep publishing to maintain the desired rate in Hz
+    rate.sleep()
+
+################################

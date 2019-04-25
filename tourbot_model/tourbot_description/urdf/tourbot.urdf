@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!-- created with Phobos 0.7 -->
+  <robot name="tourbot">
+
+    <link name="back-center_wheel_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      </inertial>
+      <visual name="back-center_wheel">
+        <origin xyz="0 0 0" rpy="0 -3.14159 0"/>
+        <geometry>
+          <cylinder radius="0.035" length="0.03757"/>
+        </geometry>
+        <material name="tred"/>
+      </visual>
+      <collision name="back-center_wheel">
+        <origin xyz="0 0 0" rpy="0 -3.14159 0"/>
+        <geometry>
+          <cylinder radius="0.03475" length="0.03761"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="front-left_wheel_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      </inertial>
+      <visual name="front-left_wheel">
+        <origin xyz="0 0 0" rpy="0 -3.14159 0"/>
+        <geometry>
+          <cylinder radius="0.035" length="0.03757"/>
+        </geometry>
+        <material name="spacer"/>
+      </visual>
+      <collision name="front-left_wheel">
+        <origin xyz="0 0 0" rpy="0 -3.14159 0"/>
+        <geometry>
+          <cylinder radius="0.035" length="0.03756"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="front-right_wheel_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.002" iyz="0" izz="0.002"/>
+      </inertial>
+      <visual name="front-right_wheel">
+        <origin xyz="0 0 0" rpy="0 -3.14159 0"/>
+        <geometry>
+          <cylinder radius="0.035" length="0.03757"/>
+        </geometry>
+        <material name="spacer.001"/>
+      </visual>
+      <collision name="front-right_wheel">
+        <origin xyz="0 0 0" rpy="0 -3.14159 0"/>
+        <geometry>
+          <cylinder radius="0.035" length="0.03755"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="link_razorm0_imu">
+    </link>
+
+    <link name="link_rplidar">
+    </link>
+
+    <link name="robot-base_plate_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="5.0"/>
+        <inertia ixx="0.06787" ixy="0" ixz="0" iyy="0.02492" iyz="0" izz="0.5362"/>
+      </inertial>
+      <visual name="robot-base_plate">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://tourbot_description/meshes/dae/Cube.002.dae" scale="0.66479 0.6021 1.0"/>
+        </geometry>
+        <material name="basecolor"/>
+      </visual>
+      <collision name="robot-base_plate">
+        <origin xyz="0 0.02141 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.46623 0.5833 0.03386"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="robot-body_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="5.0"/>
+        <inertia ixx="0.0677" ixy="0" ixz="0" iyy="0.02487" iyz="0" izz="0.53489"/>
+      </inertial>
+      <visual name="robot-top_plate">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://tourbot_description/meshes/dae/Cube.003.dae" scale="0.66479 0.6021 1.0"/>
+        </geometry>
+        <material name="basecolor"/>
+      </visual>
+      <collision name="robot-top_plate">
+        <origin xyz="0 0.02142 0.0004" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://tourbot_description/meshes/dae/Cube.012.dae" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="robot-bottom_plate_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="5.0"/>
+        <inertia ixx="0.06787" ixy="0" ixz="0" iyy="0.02492" iyz="0" izz="0.5362"/>
+      </inertial>
+      <visual name="robot-bottom_plate">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://tourbot_description/meshes/dae/Cube.001.dae" scale="0.66479 0.6021 1.0"/>
+        </geometry>
+        <material name="basecolor"/>
+      </visual>
+      <collision name="robot-bottom_plate">
+        <origin xyz="0 0.02141 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.46623 0.5833 0.03386"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="back-center_wheel_joint" type="floating">
+      <origin xyz="0.00041 0.27362 -0.06608" rpy="0 1.5708 0"/>
+      <parent link="robot-bottom_plate_link"/>
+      <child link="back-center_wheel_link"/>
+      <limit effort="10000.0" velocity="1000.0"/>
+    </joint>
+
+    <joint name="front-left_wheel_joint" type="floating">
+      <origin xyz="0.19918 -0.24306 -0.06608" rpy="0 1.5708 0"/>
+      <parent link="robot-bottom_plate_link"/>
+      <child link="front-left_wheel_link"/>
+      <limit effort="10000.0" velocity="1000.0"/>
+    </joint>
+
+    <joint name="front-right_wheel_joint" type="floating">
+      <origin xyz="-0.20119 -0.24306 -0.06608" rpy="0 1.5708 0"/>
+      <parent link="robot-bottom_plate_link"/>
+      <child link="front-right_wheel_link"/>
+      <limit effort="10000.0" velocity="1000.0"/>
+    </joint>
+
+    <joint name="link_razorm0_imu" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="robot-body_link"/>
+      <child link="link_razorm0_imu"/>
+    </joint>
+
+    <joint name="link_rplidar_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="robot-base_plate_link"/>
+      <child link="link_rplidar"/>
+    </joint>
+
+    <joint name="robot-base_plate_joint" type="fixed">
+      <origin xyz="0 2e-05 -0.20001" rpy="0 0 0"/>
+      <parent link="robot-body_link"/>
+      <child link="robot-base_plate_link"/>
+    </joint>
+
+    <joint name="robot-bottom_plate_joint" type="fixed">
+      <origin xyz="0 0 -0.2" rpy="0 0 0"/>
+      <parent link="robot-base_plate_link"/>
+      <child link="robot-bottom_plate_link"/>
+    </joint>
+
+    <material name="basecolor">
+      <color rgba="0 0.28512 0.63304 1.0"/>
+    </material>
+
+    <material name="spacer">
+      <color rgba="0.8 0.8 0.8 1.0"/>
+    </material>
+
+    <material name="spacer.001">
+      <color rgba="0.8 0.8 0.8 1.0"/>
+    </material>
+
+    <material name="tred">
+      <color rgba="0.05858 0.05858 0.05858 1.0"/>
+    </material>
+
+  </robot>

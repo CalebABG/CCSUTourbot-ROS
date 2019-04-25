@@ -1,0 +1,18 @@
+<launch>
+
+    <node pkg="polar_scan_matcher" type="psm_node" name="psm_node" output="screen">
+        <param name="world_frame" value="map"/>
+        <param name="base_frame" value="base_link"/>
+        <!--<param name="base_frame" value="base_frame"/>-->
+        <param name="publish_tf" value="false"/>
+        <param name="publish_pose" value="true"/>
+        <param name="odometry_type" value="imu"/>
+        <param name="min_valid_points" value="10"/>
+        <param name="search_window" value="50"/>
+        <param name="max_error" value="0.20"/>
+        <param name="max_iterations" value="500"/>
+        <param name="stop_condition" value="0.01"/>
+
+    </node>
+
+</launch>

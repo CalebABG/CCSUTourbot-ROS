@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="razor_imu_9dof" type="imu_node.py" name="imu_node" output="screen">
+        <rosparam file="$(find tourbot_main)/config/my_razor.yaml" command="load"/>
+    </node>
+
+    <!--Relay IMU topic to /imu/data_raw-->
+    <!--<node pkg="topic_tools" type="relay" name="imu_relay" args="/imu /imu/data_raw"/>-->
+    <!--<node pkg="topic_tools" type="relay" name="imu_relay" args="/imu /imu_topic"/>-->
+</launch>

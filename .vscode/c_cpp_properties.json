@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/caleb/ros_ws/devel/include",
+        "/opt/ros/kinetic/include",
+        "/home/caleb/ros_ws/src/hector_slam/hector_geotiff/include",
+        "/home/caleb/ros_ws/src/hector_slam/hector_map_tools/include",
+        "/home/caleb/ros_ws/src/hector_slam/hector_mapping/include",
+        "/home/caleb/ros_ws/src/hector_slam/hector_marker_drawing/include",
+        "/home/caleb/ros_ws/src/imu_tools/imu_complementary_filter/include",
+        "/home/caleb/ros_ws/src/imu_tools/imu_filter_madgwick/include",
+        "/home/caleb/ros_ws/src/ccsu_tourbot/tourbot_main/include",
+        "/usr/include"
+      ],
+      "name": "Linux",
+      "intelliSenseMode": "gcc-x64"
+    }
+  ],
+  "version": 4
+}
