@@ -1,0 +1,13 @@
+dbaeumer.vscode-eslint
+formulahendry.code-runner
+ms-iot.vscode-ros
+ms-python.python
+ms-vscode.cpptools
+ms-vscode.csharp
+PKief.material-icon-theme
+redhat.vscode-yaml
+ritwickdey.LiveServer
+streetsidesoftware.code-spell-checker
+twxs.cmake
+VisualStudioExptTeam.vscodeintellicode
+yzhang.markdown-all-in-one

@@ -1,0 +1,33 @@
+## USB port
+port: "/dev/serial/by-id/usb-SparkFun_SFE_9DOF-D21_FCF914F8504D3148372E3120FF121018-if00"
+
+##### Calibration ####
+### accelerometer
+accel_x_min: -256.96
+accel_x_max: 254.64
+accel_y_min: -252.81
+accel_y_max: 255.74
+accel_z_min: 70.68
+accel_z_max: 148.32
+
+### magnetometer
+# standard calibration
+magn_x_min: -600.0
+magn_x_max: 600.0
+magn_y_min: -600.0
+magn_y_max: 600.0
+magn_z_min: -600.0
+magn_z_max: 600.0
+
+# extended calibration
+calibration_magn_use_extended: true
+magn_ellipsoid_center: [200.100, 287.827, 80.2047]
+magn_ellipsoid_transform: [[0.982445, -0.0211691, -0.00269070], [-0.0211691, 0.965760, -0.0118721], [-0.00269070, -0.0118721, 0.991044]]
+
+# AHRS to robot calibration
+imu_yaw_calibration: 0.0
+
+### gyroscope
+gyro_average_offset_x: -0.17
+gyro_average_offset_y: 0.02
+gyro_average_offset_z: 0.32
