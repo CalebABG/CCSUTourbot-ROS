@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script based on Makefile of 'https://github.com/duckietown/rpi-ros-kinetic-base' repo
+
 # Variables for script
 imageArch=amd64
 imageTag=ccsu_duckietown/dt18/rpi-ros-kinetic-base:master19-$imageArch
