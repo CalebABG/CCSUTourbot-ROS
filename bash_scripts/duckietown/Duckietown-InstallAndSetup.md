@@ -51,7 +51,7 @@
 ## Building and running Duckietown ROS Image
 1. Clone the Git repo from official duckietown maintainers of Docker image - for now we'll use ```master19``` branch: [Repo](https://github.com/duckietown/rpi-ros-kinetic-base)
 2. Open terminal in the root directory of the newly cloned repo
-3. Copy this build script ```buildme.sh``` script to build the ```amd64``` arch version of the Docker image instead of the default ```arm32v7``` image which is designed to be used on the duckie-car/bot
+3. Copy this build script [buildme.sh](https://github.com/CalebABG/CCSUTourbot-ROS/blob/master/bash_scripts/duckietown/buildme.sh) script to build the ```amd64``` arch version of the Docker image instead of the default ```arm32v7``` image which is designed to be used on the duckie-car/bot
    1. You will need to make the script executable. In the terminal with the root directory of the git repo, type in and execute this command:
       1. ```chmod +x buildme.sh```
 4. Now that the script is executable, last thing to do is start the build of the image!
@@ -74,7 +74,5 @@
    3. Configure Git
       1. ```git config --global user.email "email"```
       2. ```git config --global user.name "full name"```
-      3. ...
-2. ...
 
 ---
