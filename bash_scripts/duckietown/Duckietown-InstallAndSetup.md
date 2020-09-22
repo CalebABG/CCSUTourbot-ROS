@@ -67,6 +67,27 @@
 
 ---
 
+## Building and running base Duckietown Docker image (NOT COMPLETE [experimental for now])
+
+1. Enter in terminal and execute following command:
+   1. ```docker pull duckietown/rpi-ros-kinetic-base:master19```
+   2. This will pull the master18 version of the Docker image for duckietown (this is the arm32v7 image)
+2. Install QEMU:
+   1. Enter in terminal and execute following commands:
+      1. ```sudo apt-get install qemu-kvm qemu virt-manager virt-viewer libvirt-bin```
+      2. ```sudo apt-get install gcc-arm-linux-gnueabihf libc6-dev-armhf-cross qemu-user-static```
+3. Install Nvidia Docker stuff:
+   1. ```distribution=$(. /etc/os-release;echo $ID$VERSION_ID)```
+   2. ```curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -```
+   3. ```curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker list```
+   4. ```sudo apt-get update```
+   5. ```sudo apt-get install -y nvidia-docker2```
+   6. ```sudo systemctl restart docker```
+   7. Test run image
+      1. ```docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi```
+
+---
+
 ## Installing Git
 1. Run in terminal:
    1. ```sudo apt-get install git```
