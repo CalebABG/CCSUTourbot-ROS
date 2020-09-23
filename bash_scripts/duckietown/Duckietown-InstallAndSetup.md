@@ -25,6 +25,18 @@
 
 ---
 
+# Installing Portainer
+
+1. Above Docker install is required
+2. Enter the following commands in terminal and execute:
+   1. ```docker volume create portainer_data```
+   2. ```docker run -d -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce```
+   3. After the above two, Portainer should be up and running (Docker container is up and running)
+   4. Now navigate to: ```http:localhost:9000/```
+   5. From there you'll be asked to enter a setup password for the admin account. After you'll be all set to go.
+
+---
+
 ## Let's pull a sample Docker image for Ubuntu!
 1. Run in terminal:
    1. ```docker pull library/ubuntu:18.04```
