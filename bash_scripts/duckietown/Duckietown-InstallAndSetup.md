@@ -1,6 +1,14 @@
 # Install on Ubuntu
 
-## Install helpful utilities
+## Helpful (I'm stuck Links/Etc...)
+- [Docker Permissions Denied](https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket)
+- [Post Installation Instructions](https://docs.docker.com/engine/install/linux-postinstall/)
+- [Docker Cheat Sheet!](https://dockerlabs.collabnix.com/docker/cheatsheet/)
+- [Duckietown Op Manual](https://docs.duckietown.org/DT19/opmanual_duckiebot/out.pdf)
+
+---
+
+## Install Helpful Utilities
 
 1. Download VSCode [Visual Studio Code](https://code.visualstudio.com/)
    1. Unpack and install: 
@@ -27,14 +35,6 @@
       2. ```
          git config --global user.name "full name"
          ```
-
----
-
-## Helpful (I'm stuck Links)
-- [Docker Permissions Denied](https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket)
-- [Post Installation Instructions](https://docs.docker.com/engine/install/linux-postinstall/)
-- [Docker Cheat Sheet!](https://dockerlabs.collabnix.com/docker/cheatsheet/)
-- [Duckietown Op Manual](https://docs.duckietown.org/DT19/opmanual_duckiebot/out.pdf)
 
 ---
 
@@ -71,7 +71,7 @@
 
 ---
 
-## Let's pull a sample Docker image for Ubuntu!
+## Pulling and Running Sample Ubuntu 18.04 Docker Image!
 1. Run in terminal:
    1. ```
       docker pull library/ubuntu:18.04
