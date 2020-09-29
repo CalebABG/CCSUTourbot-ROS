@@ -8,17 +8,33 @@
       sudo dpkg -i path_to_deb_file
       ```
 
-2. Install alternative Linux terminal - ```Terminator```: 
+2. Install alternative Linux terminal - ```Terminator```
    ```
    sudo apt-get install terminator
    ```
+3. Installing ```Git```
+   1. ```
+      sudo apt-get install git
+      ```
+   2. ```
+      sudo apt-get install git-extras
+      ```
+   3. Configure Git
+      1. ```
+         git config --global user.email "email"
+         ```
+   
+      2. ```
+         git config --global user.name "full name"
+         ```
 
-3. Duckietown Manual [Duckietown Op Manual](https://docs.duckietown.org/DT19/opmanual_duckiebot/out.pdf)
+---
 
 ## Helpful (I'm stuck Links)
 - [Docker Permissions Denied](https://www.digitalocean.com/community/questions/how-to-fix-docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket)
 - [Post Installation Instructions](https://docs.docker.com/engine/install/linux-postinstall/)
 - [Docker Cheat Sheet!](https://dockerlabs.collabnix.com/docker/cheatsheet/)
+- [Duckietown Op Manual](https://docs.duckietown.org/DT19/opmanual_duckiebot/out.pdf)
 
 ---
 
@@ -39,7 +55,7 @@
 
 ---
 
-# Installing Portainer
+## Installing Portainer
 
 1. Above Docker install is required
 2. Enter the following commands in terminal and execute:
@@ -196,22 +212,4 @@
       ```
    2. ...
 
----
-
-## Installing Git
-1. Run in terminal:
-   1. ```
-      sudo apt-get install git
-      ```
-   2. ```
-      sudo apt-get install git-extras
-      ```
-   3. Configure Git
-      1. ```
-         git config --global user.email "email"
-         ```
-   
-      2. ```
-         git config --global user.name "full name"
-         ```
 ---
